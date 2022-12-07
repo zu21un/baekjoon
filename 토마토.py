@@ -6,7 +6,7 @@ M, N = map(int, input().split())
 
 storage = []
 
-date = 0
+date = -1
 not_riped = 0
 riped = deque([])
 
@@ -19,34 +19,37 @@ for i in range(N):
       not_riped += 1
   storage.append(tomatos)
 
-while not_riped:
-  date += 1
-  new_riped = deque([])
+# while not_riped:
+#   new_riped = deque([])
   
-  while riped:
+while riped:
+  for _ in range(len(riped)):
     row, col = riped.popleft()
     
     if row - 1 >= 0 and storage[row-1][col] == 0:
       storage[row-1][col] = 1
       not_riped -= 1
-      new_riped.append((row - 1, col))
+      riped.append((row - 1, col))
     if col - 1 >= 0 and storage[row][col-1] == 0:
       storage[row][col-1] = 1
       not_riped -= 1
-      new_riped.append((row, col - 1))
+      riped.append((row, col - 1))
     if row + 1 < N and storage[row+1][col] == 0:
       storage[row+1][col] = 1
       not_riped -= 1
-      new_riped.append((row + 1, col))
+      riped.append((row + 1, col))
     if col + 1 < M and storage[row][col+1] == 0:
       storage[row][col+1] = 1
       not_riped -= 1
-      new_riped.append((row, col + 1))
+      riped.append((row, col + 1))
+      
+  date += 1
+    
 
-  if len(new_riped) == 0:
-    break
+  # if len(new_riped) == 0:
+  #   break
   
-  riped = new_riped
+  # riped = new_riped
   
 
 if not_riped == 0:

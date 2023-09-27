@@ -9,7 +9,7 @@ jewels = []
 for _ in range(N):
   M, V = map(int, input().split())
   weight, price = M, V
-  heapq.heappush(jewels,(-price, weight, price))
+  heapq.heappush(jewels,(weight, price))
 
 bags = []
 for _ in range(K):
@@ -21,17 +21,15 @@ bags.sort()
 result = 0
 tmp = []
 for bag in bags:
-  while jewels:
-    jewel = heapq.heappop(jewels)
-    weight, price = jewel[1], jewel[2]
-    if weight <= bag:
-      result += price
-      break
-    else:
-      tmp.append([weight, price])
-  for weight, price in tmp:
-    heapq.heappush(jewels,(-price, weight, price))
-  tmp = []
-
+  while jewels and bag >= jewels[0][0]:
+    weight, price = heapq.heappop(jewels)
+    heapq.heappush(tmp, (-price, weight))
+  if tmp:
+    price, weight = heapq.heappop(tmp)
+    price = -price
+    result += price
+  elif not jewels:
+    break
+  
 print(result)
 

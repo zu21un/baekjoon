@@ -1,8 +1,8 @@
 import sys
-from collections import defaultdict, deque
-
+from collections import defaultdict
 
 input = sys.stdin.readline
+sys.setrecursionlimit(10**9)
 
 n = int(input())
 
